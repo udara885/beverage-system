@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const Menu = () => {
 	return (
-		<div className="font-poppins flex justify-between text-[28px] font-medium gap-10 whitespace-nowrap">
+		<div className="font-poppins flex justify-between items-center text-[28px] font-medium gap-10 whitespace-nowrap">
 			<Link
 				to={"/coffee"}
 				className="border-b-3 border-transparent focus:border-orange-400 cursor-pointer"
