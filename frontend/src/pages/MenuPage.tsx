@@ -7,7 +7,7 @@ const MenuPage = () => {
 
 	return (
 		<div>
-			<h1 className="font-poppins text-5xl font-medium m-6">
+			<h1 className="font-poppins text-5xl font-medium my-6 mx-15">
 				{path === "/coffee" || path === "/"
 					? "Coffee"
 					: path === "/shakes"
@@ -16,7 +16,7 @@ const MenuPage = () => {
 					? "Tea"
 					: "Bubble Tea"}
 			</h1>
-			<div className="flex justify-between">
+			<div className="flex justify-between mx-8">
 				<div className="w-2/3 h-10">
 					<MenuContent />
 				</div>
@@ -32,7 +32,7 @@ const MenuPage = () => {
 								: "bubble-tea.png"
 						}
 						alt=""
-						className="object-cover bg-no-repeat -mt-24"
+						className="object-cover bg-no-repeat -mt-31"
 					/>
 				</div>
 			</div>
