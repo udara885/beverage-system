@@ -10,8 +10,9 @@ function App() {
 				<Navbar />
 				<Routes>
 					{["/", "/coffee", "/shakes", "/tea", "/bubble-tea"].map(
-						(path) => (
+						(path, index) => (
 							<Route
+								key={index}
 								path={path}
 								element={<MenuPage />}
 							/>
