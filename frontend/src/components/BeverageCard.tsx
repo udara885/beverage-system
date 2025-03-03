@@ -9,6 +9,7 @@ const BeverageCard = () => {
 					src="espresso.png"
 					alt=""
 					className="w-30 h-30 rounded-full object-cover bg-no-repeat"
+					loading="lazy"
 				/>
 				<div className="flex flex-col font-poppins">
 					<h1 className="text-[1.75rem] font-semibold">
