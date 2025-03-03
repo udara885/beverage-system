@@ -1,4 +1,5 @@
 import { ShoppingCart } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const CustomizePage = () => {
 	return (
@@ -17,7 +18,7 @@ const CustomizePage = () => {
 					<img
 						src="customize.png"
 						alt=""
-						className="h-[calc(100vh-30vh)] text-center"
+						className="h-[calc(100vh-30vh)]"
 					/>
 				</div>
 				<div className="w-1/2 font-poppins flex justify-center">
@@ -68,10 +69,13 @@ const CustomizePage = () => {
 							type="text"
 							className="border w-full py-2 rounded-md px-3"
 						/>
-						<button type="submit" className="bg-orange-500 hover:bg-orange-600 px-4 py-1 text-lg font-semibold text-white flex gap-2 rounded-lg self-end mt-4 cursor-pointer">
+						<Link
+							to={"/cart"}
+							className="bg-orange-500 hover:bg-orange-600 px-4 py-1 text-lg font-semibold text-white flex gap-2 rounded-lg self-end mt-4 cursor-pointer"
+						>
 							Add To Cart
 							<ShoppingCart />
-						</button>
+						</Link>
 					</form>
 				</div>
 			</div>
