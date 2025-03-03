@@ -7,9 +7,9 @@ const Navbar = () => {
 	const location = useLocation()
 	const path = location.pathname
 	return (
-		<div className="flex  justify-between my-5 px-20 w-screen items-center">
+		<div className="flex justify-between my-5 w-[80rem] items-center">
 			<BackButton />
-			{path !== "/customize" && <Menu />}
+			{path !== "/customize" && path !== "/cart" && path !== "/checkout" ? <Menu /> : <></>}
 			<Logo />
 		</div>
 	)
