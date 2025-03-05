@@ -5,13 +5,19 @@ const CartCard = () => {
   const location = useLocation()
   const path = location.pathname
   return (
-    <div className="flex w-full items-center justify-around rounded-lg shadow-[0px_4px_30.8px_0px_rgba(0,0,0,0.25)] px-6 gap-5">
+    <div className="flex w-full items-center justify-around gap-5 rounded-lg px-6 shadow-[0px_4px_30.8px_0px_rgba(0,0,0,0.25)]">
       <img src="cartCard.png" className="my-3 h-40 w-40 rounded-full" alt="" />
       <div className="font-poppins">
         <h2 className="text-2xl font-semibold">Berry Blast Smoothie</h2>
         {path === "/cart" ? (
           <>
-            <h3 className="text-lg font-medium">customized - Whole Milk</h3>
+            <div className="flex gap-1 text-lg font-medium">
+              <h3>customized - </h3>
+              <div>
+                <h3>Whole Milk</h3>
+                <h3>Vanilla</h3>
+              </div>
+            </div>
             <div className="mt-5 flex w-1/2 items-center justify-around rounded-lg border-2">
               <button className="cursor-pointer">-</button>
               <span className="font-bold">1</span>
@@ -19,7 +25,7 @@ const CartCard = () => {
             </div>
           </>
         ) : (
-          <p className="text-lg text-justify">
+          <p className="text-justify text-lg">
             A refreshing blend of strawberries, blueberries, and raspberries
             mixed with yogurt and a splash of apple juice for a fruity delight.
           </p>
