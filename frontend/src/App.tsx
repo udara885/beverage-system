@@ -7,6 +7,9 @@ import CheckoutPage from "./pages/CheckoutPage"
 import CardDetailsPage from "./pages/CardDetailsPage"
 import OrderConfirmPage from "./pages/OrderConfirmPage"
 import FeedbackPage from "./pages/FeedbackPage"
+import KitchenPage from "./pages/KitchenPage"
+import InstructionPage from "./pages/InstructionPage"
+import NotFoundPage from "./pages/NotFoundPage"
 
 function App() {
   return (
@@ -25,6 +28,11 @@ function App() {
           <Route path="/card-details" element={<CardDetailsPage />} />
           <Route path="/order-confirm" element={<OrderConfirmPage />} />
           <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="kitchen">
+            <Route index element={<KitchenPage />} />
+            <Route path="instruction" element={<InstructionPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </div>
