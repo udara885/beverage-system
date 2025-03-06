@@ -30,7 +30,7 @@ function App() {
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="kitchen">
             <Route index element={<KitchenPage />} />
-            <Route path="instruction" element={<InstructionPage />} />
+            <Route path="instructions" element={<InstructionPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
