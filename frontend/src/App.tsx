@@ -10,6 +10,8 @@ import FeedbackPage from "./pages/FeedbackPage"
 import KitchenPage from "./pages/KitchenPage"
 import InstructionPage from "./pages/InstructionPage"
 import NotFoundPage from "./pages/NotFoundPage"
+import OrdersPage from "./pages/OrdersPage"
+import CompletedOrdersPage from "./pages/CompletedOrdersPage"
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
           <Route path="/feedback" element={<FeedbackPage />} />
           <Route path="kitchen">
             <Route index element={<KitchenPage />} />
+            <Route path="orders" element={<OrdersPage />} />
+            <Route path="completed-orders" element={<CompletedOrdersPage />} />
             <Route path="instructions" element={<InstructionPage />} />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
