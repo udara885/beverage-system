@@ -25,3 +25,5 @@ dist-ssr
 
 # Prettier config
 .prettierrc
+
+.env
