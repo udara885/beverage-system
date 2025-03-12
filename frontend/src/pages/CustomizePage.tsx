@@ -1,5 +1,5 @@
-import { ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ShoppingCart } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const CustomizePage = () => {
   return (
@@ -56,7 +56,7 @@ const CustomizePage = () => {
             <input type="text" className="w-full rounded-md border px-3 py-2" />
             <Link
               to={"/cart"}
-              className="mt-4 flex cursor-pointer gap-2 self-end rounded-lg bg-orange-500 px-4 py-1 text-lg font-semibold text-white"
+              className="mt-4 flex cursor-pointer gap-2 self-end rounded-lg bg-orange-400 px-4 py-1 text-lg font-semibold text-white"
             >
               Add To Cart
               <ShoppingCart />
@@ -65,7 +65,7 @@ const CustomizePage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CustomizePage;
+export default CustomizePage
