@@ -17,7 +17,7 @@ const beverageSchema = new mongoose.Schema(
 		category: {
 			type: String,
 			require: true,
-			enum: ["coffee", "shakes", "tea", "bubble-tea"],
+			enum: ["coffee", "shake", "tea", "bubble-tea"],
 		},
 		description: {
 			type: String,
