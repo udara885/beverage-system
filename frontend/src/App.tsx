@@ -12,6 +12,9 @@ import InstructionPage from "./pages/InstructionPage"
 import NotFoundPage from "./pages/NotFoundPage"
 import OrdersPage from "./pages/OrdersPage"
 import CompletedOrdersPage from "./pages/CompletedOrdersPage"
+import AdminPage from "./pages/AdminPage"
+import AddBeveragePage from "./pages/AddBeveragePage"
+import UpdateBeveragePage from "./pages/UpdateBeveragePage"
 
 function App() {
   return (
@@ -35,6 +38,14 @@ function App() {
             <Route path="orders" element={<OrdersPage />} />
             <Route path="completed-orders" element={<CompletedOrdersPage />} />
             <Route path="instructions" element={<InstructionPage />} />
+          </Route>
+          <Route path="admin">
+            <Route index element={<AdminPage />} />
+            <Route path="add-beverage" element={<AddBeveragePage />} />
+            <Route
+              path="update-beverage/:id"
+              element={<UpdateBeveragePage />}
+            />
           </Route>
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
