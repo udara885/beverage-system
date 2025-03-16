@@ -1,27 +1,14 @@
 import { PencilLine, Trash2 } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Beverage } from "../types/types"
-import { useBeverageStore } from "../store/beverage"
-import toast from "react-hot-toast"
 
-const AdminBeverageCard = ({ beverage }: { beverage: Beverage }) => {
-  const { deleteBeverage } = useBeverageStore()
-
-  const navigate = useNavigate()
-
-  const handleDelete = async (id: string | undefined): Promise<void> => {
-    if (!id) {
-      throw new Error("id is undefined")
-    }
-    const { success, message } = await deleteBeverage(id)
-    if (!success) {
-      toast.error(message)
-    } else {
-      toast.success(message)
-    }
-    navigate("/admin")
-  }
-
+const AdminBeverageCard = ({
+  beverage,
+  handleDelete,
+}: {
+  beverage: Beverage
+  handleDelete: (id: string | undefined) => void
+}) => {
   return (
     <div className="flex w-[25%] flex-col items-center gap-2 rounded-lg py-4 shadow-[1px_1px_5px_1px_rgba(0,0,0,0.2)]">
       <img
