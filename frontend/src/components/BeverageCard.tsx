@@ -12,7 +12,7 @@ const BeverageCard = ({ beverage }: { beverage: Beverage }) => {
           className="h-30 w-30 rounded-full bg-no-repeat object-cover"
           loading="lazy"
         />
-        <div className="font-poppins flex flex-col">
+        <div className="font-poppins flex w-full flex-col">
           <h1 className="text-[1.75rem] font-semibold">
             {beverage.name} - ${beverage.price}
           </h1>
