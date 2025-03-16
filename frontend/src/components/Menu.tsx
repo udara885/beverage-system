@@ -1,36 +1,34 @@
+import { useContext } from "react"
 import { Link, useLocation } from "react-router-dom"
+import { AdminContext } from "../context/AdminContext"
 
 const Menu = () => {
+  const isAdmin = useContext(AdminContext)
+
   const location = useLocation()
+
   const path = location.pathname
+
+  const paths = ["/coffee", "/shake", "/tea", "/bubble-tea"]
+
   return (
     <div className="font-poppins flex items-center justify-between gap-10 text-[1.75rem] font-medium whitespace-nowrap">
       {!path.split("/").includes("kitchen") ? (
         <>
-          <Link
-            to={"/coffee"}
-            className="cursor-pointer border-b-3 border-transparent focus:border-orange-400"
-          >
-            Coffee
-          </Link>
-          <Link
-            to={"/shakes"}
-            className="cursor-pointer border-b-3 border-transparent focus:border-orange-400"
-          >
-            Shakes
-          </Link>
-          <Link
-            to={"/tea"}
-            className="cursor-pointer border-b-3 border-transparent focus:border-orange-400"
-          >
-            Tea
-          </Link>
-          <Link
-            to={"/bubble-tea"}
-            className="cursor-pointer border-b-3 border-transparent focus:border-orange-400"
-          >
-            Bubble Tea
-          </Link>
+          {paths.map((p, index) => (
+            <Link
+              to={isAdmin ? `/admin${p}` : `${p}`}
+              key={index}
+              className="cursor-pointer border-b-3 border-transparent focus:border-orange-400"
+            >
+              {p.split("/")[1].charAt(0).toUpperCase() +
+                p.split("/")[1].slice(1) ===
+              "Bubble-tea"
+                ? "Bubble Tea"
+                : p.split("/")[1].charAt(0).toUpperCase() +
+                  p.split("/")[1].slice(1)}
+            </Link>
+          ))}
         </>
       ) : (
         <>
