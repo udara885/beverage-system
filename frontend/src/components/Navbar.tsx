@@ -3,10 +3,16 @@ import BackButton from "./BackButton"
 import Logo from "./Logo"
 import Menu from "./Menu"
 import { CirclePlus } from "lucide-react"
+import { AdminContext } from "../context/AdminContext"
+import { useContext } from "react"
 
 const Navbar = () => {
   const location = useLocation()
+
   const path = location.pathname
+
+  const isAdmin = useContext(AdminContext)
+
   const hideMenuPaths = [
     "/customize",
     "/cart",
@@ -20,7 +26,7 @@ const Navbar = () => {
         <div
           className={`my-5 flex w-[80rem] items-center justify-between ${path === "/admin" && "flex-row-reverse"}`}
         >
-          {path !== "/admin" ? (
+          {isAdmin ? (
             <BackButton />
           ) : (
             <Link
