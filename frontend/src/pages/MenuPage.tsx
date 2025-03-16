@@ -9,6 +9,8 @@ const MenuPage = () => {
 
   const path = location.pathname
 
+  const str = path.split("/")[1]
+
   const { beverages, getBeverages } = useBeverageStore()
 
   const [loading, setLoading] = useState(true)
@@ -29,15 +31,13 @@ const MenuPage = () => {
       ) : (
         <>
           <h1 className="font-poppins mx-15 my-6 text-5xl font-medium">
-            {path === "/coffee" || path === "/"
-              ? "Coffee"
-              : path === "/shakes"
-                ? "Shakes"
-                : path === "/tea"
-                  ? "Tea"
-                  : "Bubble Tea"}
+            {str.charAt(0).toUpperCase() + str.slice(1) === "Bubble-tea"
+              ? "Bubble Tea"
+              : str.charAt(0).toUpperCase() + str.slice(1) === ""
+                ? "Coffee"
+                : str.charAt(0).toUpperCase() + str.slice(1)}
           </h1>
-          <div className="mx-8 flex w-full justify-between">
+          <div className="flex w-screen justify-between px-8">
             <div className="h-10 w-2/3">
               <MenuContent beverages={beverages} />
             </div>
@@ -46,7 +46,7 @@ const MenuPage = () => {
                 src={
                   path === "/coffee" || path === "/"
                     ? "coffee.png"
-                    : path === "/shakes"
+                    : path === "/shake"
                       ? "shake.png"
                       : path === "/tea"
                         ? "tea.png"
