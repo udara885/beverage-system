@@ -24,9 +24,9 @@ const Navbar = () => {
     <>
       {path !== "/order-confirm" && path !== "/feedback" && (
         <div
-          className={`my-5 flex w-[80rem] items-center justify-between ${path === "/admin" && "flex-row-reverse"}`}
+          className={`my-5 flex w-[80rem] items-center justify-between ${isAdmin && "flex-row-reverse"}`}
         >
-          {isAdmin ? (
+          {!isAdmin ? (
             <BackButton />
           ) : (
             <Link
