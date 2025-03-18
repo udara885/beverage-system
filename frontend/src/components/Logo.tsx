@@ -1,8 +1,11 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
+import { AdminContext } from "../context/AdminContext"
 
 const Logo = () => {
+  const isAdmin = useContext(AdminContext)
   return (
-    <Link to={"/"}>
+    <Link to={isAdmin ? "/admin" : "/"}>
       <div className="flex items-center gap-3">
         <div className="rounded-md border-3 border-gray-400 p-0.5">
           <svg
