@@ -55,6 +55,11 @@ const UpdateBeveragePage = () => {
     }
   }
 
+  const handleGoBack = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    navigate(-1)
+  }
+
   return (
     <>
       {loading ? (
@@ -135,6 +140,12 @@ const UpdateBeveragePage = () => {
               onClick={(e) => handleSubmit(e, id, updatedBeverage)}
             >
               Update Beverage
+            </button>
+            <button
+              className="cursor-pointer rounded-lg border border-orange-400 p-2 font-semibold text-orange-400"
+              onClick={handleGoBack}
+            >
+              Go Back
             </button>
           </form>
         </div>
