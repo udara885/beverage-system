@@ -35,6 +35,11 @@ const AddBeveragePage = () => {
     }
   }
 
+  const handleGoBack = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    navigate(-1)
+  }
+
   return (
     <div className="font-poppins -mt-4 flex w-full flex-col items-center">
       <h1 className="text-4xl font-bold">Add New Beverage</h1>
@@ -99,6 +104,12 @@ const AddBeveragePage = () => {
           onClick={handleSubmit}
         >
           Add Beverage
+        </button>
+        <button
+          className="cursor-pointer rounded-lg border border-orange-400 p-2 font-semibold text-orange-400"
+          onClick={handleGoBack}
+        >
+          Go Back
         </button>
       </form>
     </div>
