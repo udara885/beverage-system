@@ -3,11 +3,21 @@ import AdminBeverageCard from "../components/AdminBeverageCard"
 import { useBeverageStore } from "../store/beverage"
 import Loader from "../components/Loader"
 import toast from "react-hot-toast"
+import { Beverage } from "../types/types"
+import { useLocation } from "react-router-dom"
 
 const AdminPage = () => {
   const { beverages, getBeverages, deleteBeverage } = useBeverageStore()
 
   const [loading, setLoading] = useState(true)
+
+  const [filteredBeverages, setFilteredBeverages] = useState<Beverage[]>([])
+
+  const location = useLocation()
+
+  const path = location.pathname
+
+  const str = path.split("/")[2]
 
   useEffect(() => {
     const fetchBeverages = async () => {
@@ -17,6 +27,14 @@ const AdminPage = () => {
     }
     fetchBeverages()
   }, [getBeverages])
+
+  useEffect(() => {
+    setFilteredBeverages(
+      str === undefined
+        ? beverages.filter((beverage) => beverage.category === "coffee")
+        : beverages.filter((beverage) => beverage.category === str),
+    )
+  }, [beverages, str])
 
   const handleDelete = async (id: string | undefined): Promise<void> => {
     if (!id) {
@@ -40,8 +58,8 @@ const AdminPage = () => {
         <Loader />
       ) : (
         <div className="no-scrollbar flex h-[calc(100vh-13vh)] w-[90%] flex-wrap items-center justify-center gap-10 overflow-y-scroll py-4">
-          {beverages.length !== 0 ? (
-            beverages.map((beverage, index) => (
+          {filteredBeverages.length !== 0 ? (
+            filteredBeverages.map((beverage, index) => (
               <AdminBeverageCard
                 key={index}
                 beverage={beverage}
