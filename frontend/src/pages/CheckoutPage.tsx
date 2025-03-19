@@ -1,16 +1,23 @@
 import { CreditCard } from "lucide-react"
 import { Link } from "react-router-dom"
 import CartCard from "../components/CartCard"
+import { CartItem } from "../types/types"
 
 const CheckoutPage = () => {
+  const cartItems: CartItem[] = JSON.parse(
+    localStorage.getItem("cartItems") || "[]",
+  )
+
   return (
     <div className="font-poppins flex w-full flex-col items-center">
       <h1 className="-mt-10 w-full border-b pb-4 text-center text-5xl font-medium">
         Check Out
       </h1>
       <div className="flex w-full justify-between gap-10 px-10">
-        <div className="mt-10 flex w-1/2 flex-col items-center">
-          <CartCard />
+        <div className="mt-10 flex w-1/2 flex-col items-center overflow-y-scroll">
+          {cartItems.map((item, index) => (
+            <CartCard key={index} cartItem={item} />
+          ))}
         </div>
         <div className="mt-10 flex w-1/2 flex-col">
           <table className="font-poppins w-full">
