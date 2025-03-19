@@ -19,6 +19,7 @@ const BeverageCard = ({ beverage }: { beverage: Beverage }) => {
           <p className="text-[1.375rem]">{beverage.description}</p>
           <Link
             to={"/customize"}
+            state={{ beverage }}
             className="mx-3 my-3 self-end rounded-lg bg-orange-400 px-3 text-center text-lg font-semibold text-white"
           >
             {"Customize >"}
