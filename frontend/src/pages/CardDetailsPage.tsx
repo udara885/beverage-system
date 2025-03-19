@@ -2,6 +2,10 @@ import { CreditCard } from "lucide-react"
 import { Link } from "react-router-dom"
 
 const CardDetailsPage = () => {
+  const clearCart = () => {
+    localStorage.removeItem("cartItems")
+  }
+
   return (
     <div className="font-poppins flex w-full flex-col items-center">
       <h1 className="-mt-10 w-full border-b pb-4 text-center text-5xl font-medium">
@@ -56,6 +60,7 @@ const CardDetailsPage = () => {
         </div>
         <Link
           to={"/order-confirm"}
+          onClick={clearCart}
           className="font-poppins mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md bg-orange-400 px-10 py-3 text-lg text-white"
         >
           <span className="font-semibold">Pay</span>
