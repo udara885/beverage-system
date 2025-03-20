@@ -5,9 +5,13 @@ import { CartItem } from "../types/types"
 const CartCard = ({
   cartItem,
   onRemove,
+  onIncrease,
+  onDecrease,
 }: {
   cartItem: CartItem
   onRemove?: (id: string) => void
+  onIncrease?: (id: string) => void
+  onDecrease?: (id: string) => void
 }) => {
   const location = useLocation()
 
@@ -42,9 +46,19 @@ const CartCard = ({
                 </div>
               )}
               <div className="mt-5 flex w-40 items-center justify-around rounded-lg border-2">
-                <button className="cursor-pointer">-</button>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => cartItem._id && onDecrease?.(cartItem._id)}
+                >
+                  -
+                </button>
                 <span className="font-bold">{cartItem.quantity}</span>
-                <button className="cursor-pointer">+</button>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => cartItem._id && onIncrease?.(cartItem._id)}
+                >
+                  +
+                </button>
               </div>
             </>
           ) : (
