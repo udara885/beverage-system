@@ -13,7 +13,7 @@ const CartPage = () => {
   const [items, setItems] = useState(cartItems)
 
   const removeItem = (id: string) => {
-    const updatedCart = items?.filter((item) => item._id !== id)
+    const updatedCart = items?.filter((item) => item.id !== id)
     localStorage.setItem("cartItems", JSON.stringify(updatedCart))
     toast.success("Item removed from cart")
     setItems(updatedCart)
@@ -21,7 +21,7 @@ const CartPage = () => {
 
   const increaseQty = (id: string) => {
     const updatedCart = items.map((item) =>
-      item._id === id ? { ...item, quantity: item.quantity + 1 } : item,
+      item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
     )
     localStorage.setItem("cartItems", JSON.stringify(updatedCart))
     setItems(updatedCart)
@@ -29,7 +29,7 @@ const CartPage = () => {
 
   const decreaseQty = (id: string) => {
     const updatedCart = items.map((item) =>
-      item._id === id
+      item.id === id
         ? { ...item, quantity: Math.max(1, item.quantity - 1) }
         : item,
     )
