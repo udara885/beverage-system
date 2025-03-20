@@ -12,6 +12,7 @@ export type CartItem = {
   _id?: string
   name: string
   price: number
+  priceWithCustomization: number
   image: string
   category: string
   description: string
