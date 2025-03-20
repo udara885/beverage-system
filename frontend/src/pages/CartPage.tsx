@@ -117,7 +117,12 @@ const CartPage = () => {
               </div>
               <div className="flex justify-between border-t py-1 text-xl">
                 <h3 className="font-semibold">Total</h3>
-                <h3>$3.81</h3>
+                <h3>
+                  $
+                  {items
+                    .reduce((sum, item) => sum + (item.amount ?? 0), 0)
+                    .toFixed(2)}
+                </h3>
               </div>
             </div>
             <Link
