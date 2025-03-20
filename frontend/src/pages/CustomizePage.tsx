@@ -1,12 +1,14 @@
 import { ShoppingCart } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
-import { Beverage, CartItem } from "../types/types"
+import { CartItem } from "../types/types"
 import { ChangeEvent, useState } from "react"
+import { v4 as uuid } from "uuid"
+import toast from "react-hot-toast"
 
 const CustomizePage = () => {
   const location = useLocation()
 
-  const beverage: Beverage = location.state.beverage
+  const beverage: CartItem = location.state.beverage
 
   const cartItem: CartItem = location.state.cartItem
 
@@ -45,9 +47,16 @@ const CustomizePage = () => {
         item._id === cartItem._id ? { ...item, customization } : item,
       )
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
+      toast.success("Cart updated")
     } else {
       const beverageExists = existingCartItems.some(
-        (item: Beverage) => item._id === beverage._id,
+        (item: CartItem) =>
+          item.customization?.milk === beverage.customization?.milk &&
+          item.customization?.flavours === beverage.customization?.flavours &&
+          item.customization?.sweeteners ===
+            beverage.customization?.sweeteners &&
+          item.customization?.specialInstructions ===
+            beverage.customization?.specialInstructions,
       )
       if (!beverageExists) {
         const hasCustomizations = Object.values(customization).some(
@@ -55,11 +64,15 @@ const CustomizePage = () => {
         )
         const beverageWithCustomization: CartItem = {
           ...beverage,
+          id: uuid(),
           quantity: 1,
           ...(hasCustomizations && { customization }),
         }
         const updatedCart = [...existingCartItems, beverageWithCustomization]
         localStorage.setItem("cartItems", JSON.stringify(updatedCart))
+        toast.success("Item added to Cart")
+      } else {
+        toast.error("Item already in Cart")
       }
     }
   }
