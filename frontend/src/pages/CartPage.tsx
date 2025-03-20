@@ -21,7 +21,15 @@ const CartPage = () => {
 
   const increaseQty = (id: string) => {
     const updatedCart = items.map((item) =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item,
+      item.id === id
+        ? {
+            ...item,
+            quantity: item.quantity + 1,
+            amount: Number(
+              (item.priceWithCustomization * (item.quantity + 1)).toFixed(2),
+            ),
+          }
+        : item,
     )
     localStorage.setItem("cartItems", JSON.stringify(updatedCart))
     setItems(updatedCart)
@@ -30,7 +38,16 @@ const CartPage = () => {
   const decreaseQty = (id: string) => {
     const updatedCart = items.map((item) =>
       item.id === id
-        ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+        ? {
+            ...item,
+            quantity: Math.max(1, item.quantity - 1),
+            amount: Number(
+              Math.max(
+                item.priceWithCustomization,
+                item.priceWithCustomization * (item.quantity - 1),
+              ).toFixed(2),
+            ),
+          }
         : item,
     )
     localStorage.setItem("cartItems", JSON.stringify(updatedCart))
