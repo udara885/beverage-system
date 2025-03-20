@@ -8,6 +8,26 @@ import toast from "react-hot-toast"
 const CustomizePage = () => {
   const location = useLocation()
 
+  const milk = [
+    { name: "Whole Milk", price: 0.3 },
+    { name: "Almond Milk", price: 0.4 },
+    { name: "Soy Milk", price: 0.7 },
+  ]
+
+  const flavours = [
+    { name: "Vanilla", price: 0.5 },
+    { name: "Caramel", price: 0.5 },
+    { name: "Hazelnut", price: 0.5 },
+    { name: "Lavender", price: 0.5 },
+    { name: "Cinnamon", price: 0.5 },
+  ]
+
+  const sweeteners = [
+    { name: "Sugar", price: 0.2 },
+    { name: "Brown Sugar", price: 0.3 },
+    { name: "Honey", price: 0.5 },
+  ]
+
   const beverage: CartItem = location.state.beverage
 
   const cartItem: CartItem = location.state.cartItem
@@ -43,8 +63,25 @@ const CustomizePage = () => {
       localStorage.getItem("cartItems") || "[]",
     )
     if (cartItem) {
+      const hasCustomizations = Object.values(customization).some(
+        (value) => value !== "",
+      )
+      const extraCost = hasCustomizations
+        ? (milk.find((m) => m.name === customization.milk)?.price || 0) +
+          (flavours.find((f) => f.name === customization.flavours)?.price ||
+            0) +
+          (sweeteners.find((s) => s.name === customization.sweeteners)?.price ||
+            0)
+        : 0
       const updatedCartItems = existingCartItems.map((item: CartItem) =>
-        item._id === cartItem._id ? { ...item, customization } : item,
+        item.id === cartItem.id
+          ? {
+              ...item,
+              customization,
+              amount: cartItem.price + extraCost,
+              priceWithCustomization: beverage.price + extraCost,
+            }
+          : item,
       )
       localStorage.setItem("cartItems", JSON.stringify(updatedCartItems))
       toast.success("Cart updated")
@@ -62,11 +99,20 @@ const CustomizePage = () => {
         const hasCustomizations = Object.values(customization).some(
           (value) => value !== "",
         )
+        const extraCost = hasCustomizations
+          ? (milk.find((m) => m.name === customization.milk)?.price || 0) +
+            (flavours.find((f) => f.name === customization.flavours)?.price ||
+              0) +
+            (sweeteners.find((s) => s.name === customization.sweeteners)
+              ?.price || 0)
+          : 0
         const beverageWithCustomization: CartItem = {
           ...beverage,
           id: uuid(),
           quantity: 1,
-          ...(hasCustomizations && { customization }),
+          amount: beverage.price + extraCost,
+          priceWithCustomization: beverage.price + extraCost,
+          customization: hasCustomizations ? customization : undefined,
         }
         const updatedCart = [...existingCartItems, beverageWithCustomization]
         localStorage.setItem("cartItems", JSON.stringify(updatedCart))
@@ -104,9 +150,11 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Milk Options</option>
-              <option value="whole-milk">Whole Milk - $0.30</option>
-              <option value="almond-milk">Almond Milk - $0.40</option>
-              <option value="soy-milk">Soy Milk - $0.70</option>
+              {milk.map((m) => (
+                <option value={m.name}>
+                  {m.name} - ${m.price}
+                </option>
+              ))}
             </select>
             <h3 className="mt-4 text-xl font-semibold">Flavours Syrups</h3>
             <select
@@ -116,11 +164,11 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Flavours Syrups Options</option>
-              <option value="vanilla">Vanilla - $0.50</option>
-              <option value="caramel">Caramel - $0.50</option>
-              <option value="hazelnut">Hazelnut - $0.50</option>
-              <option value="lavender">Lavender - $0.50</option>
-              <option value="cinnamon">Cinnamon - $0.50</option>
+              {flavours.map((f) => (
+                <option value={f.name}>
+                  {f.name} - ${f.price}
+                </option>
+              ))}
             </select>
             <h3 className="mt-4 text-xl font-semibold">Sweeteners</h3>
             <select
@@ -130,9 +178,11 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Sweeteners Options</option>
-              <option value="sugar">Sugar - $0.20</option>
-              <option value="brown-sugar">Brown Sugar - $0.30</option>
-              <option value="honey">Honey - $0.50</option>
+              {sweeteners.map((s) => (
+                <option value={s.name}>
+                  {s.name} - ${s.price}
+                </option>
+              ))}
             </select>
             <h3 className="mt-4 text-xl font-semibold">Special Instructions</h3>
             <input
