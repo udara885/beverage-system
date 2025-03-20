@@ -48,14 +48,14 @@ const CartCard = ({
               <div className="mt-5 flex w-40 items-center justify-around rounded-lg border-2">
                 <button
                   className="cursor-pointer"
-                  onClick={() => cartItem._id && onDecrease?.(cartItem._id)}
+                  onClick={() => cartItem.id && onDecrease?.(cartItem.id)}
                 >
                   -
                 </button>
                 <span className="font-bold">{cartItem.quantity}</span>
                 <button
                   className="cursor-pointer"
-                  onClick={() => cartItem._id && onIncrease?.(cartItem._id)}
+                  onClick={() => cartItem.id && onIncrease?.(cartItem.id)}
                 >
                   +
                 </button>
@@ -70,7 +70,7 @@ const CartCard = ({
         <div className="absolute right-5 flex flex-col gap-2 self-end pb-5">
           <button
             className="cursor-pointer rounded-lg bg-orange-400 p-1 text-white"
-            onClick={() => cartItem._id && onRemove?.(cartItem._id)}
+            onClick={() => cartItem.id && onRemove?.(cartItem.id)}
           >
             <Trash />
           </button>
