@@ -19,6 +19,24 @@ const CartPage = () => {
     setItems(updatedCart)
   }
 
+  const increaseQty = (id: string) => {
+    const updatedCart = items.map((item) =>
+      item._id === id ? { ...item, quantity: item.quantity + 1 } : item,
+    )
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart))
+    setItems(updatedCart)
+  }
+
+  const decreaseQty = (id: string) => {
+    const updatedCart = items.map((item) =>
+      item._id === id
+        ? { ...item, quantity: Math.max(1, item.quantity - 1) }
+        : item,
+    )
+    localStorage.setItem("cartItems", JSON.stringify(updatedCart))
+    setItems(updatedCart)
+  }
+
   return (
     <div className="flex w-full flex-col">
       <h1 className="-mt-10 w-full border-b pb-4 text-center text-5xl font-medium">
@@ -28,7 +46,13 @@ const CartPage = () => {
         <div className="flex w-full justify-between gap-5 px-10">
           <div className="no-scrollbar mt-10 flex h-[calc(100vh-30vh)] w-1/2 flex-col items-center overflow-y-scroll p-2">
             {items.map((item, index) => (
-              <CartCard key={index} cartItem={item} onRemove={removeItem} />
+              <CartCard
+                key={index}
+                cartItem={item}
+                onRemove={removeItem}
+                onIncrease={increaseQty}
+                onDecrease={decreaseQty}
+              />
             ))}
             <Link
               to={"/"}
