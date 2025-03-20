@@ -34,7 +34,7 @@ const CartCard = ({
                   <h3>customized - </h3>
                   <div>
                     <h3 className="capitalize">
-                      {cartItem.customization.milk?.split("-").join(" ")}
+                      {cartItem.customization.milk}
                     </h3>
                     <h3 className="capitalize">
                       {cartItem.customization.flavours}
