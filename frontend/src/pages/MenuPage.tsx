@@ -50,7 +50,7 @@ const MenuPage = () => {
                     ? "Coffee"
                     : str.charAt(0).toUpperCase() + str.slice(1)}
               </h1>
-              <div className="flex w-screen justify-between px-8">
+              <div className="flex w-full justify-between px-8">
                 <div className="h-10 w-2/3">
                   <MenuContent beverages={filteredBeverages} />
                 </div>
