@@ -8,6 +8,7 @@ export type Beverage = {
 }
 
 export type CartItem = {
+  id: string
   _id?: string
   name: string
   price: number
