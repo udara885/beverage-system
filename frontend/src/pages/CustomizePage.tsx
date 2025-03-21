@@ -1,6 +1,6 @@
 import { ShoppingCart } from "lucide-react"
 import { Link, useLocation } from "react-router-dom"
-import { CartItem } from "../types/types"
+import { Beverage, CartItem } from "../types/types"
 import { ChangeEvent, useState } from "react"
 import { v4 as uuid } from "uuid"
 import toast from "react-hot-toast"
@@ -28,7 +28,7 @@ const CustomizePage = () => {
     { name: "Honey", price: 0.5 },
   ]
 
-  const beverage: CartItem = location.state.beverage
+  const beverage: Beverage = location.state.beverage
 
   const cartItem: CartItem = location.state.cartItem
 
@@ -63,23 +63,18 @@ const CustomizePage = () => {
       localStorage.getItem("cartItems") || "[]",
     )
     if (cartItem) {
-      const hasCustomizations = Object.values(customization).some(
-        (value) => value !== "",
-      )
-      const extraCost = hasCustomizations
-        ? (milk.find((m) => m.name === customization.milk)?.price || 0) +
-          (flavours.find((f) => f.name === customization.flavours)?.price ||
-            0) +
-          (sweeteners.find((s) => s.name === customization.sweeteners)?.price ||
-            0)
-        : 0
+      const extraCost =
+        (milk.find((m) => m.name === customization.milk)?.price || 0) +
+        (flavours.find((f) => f.name === customization.flavours)?.price || 0) +
+        (sweeteners.find((s) => s.name === customization.sweeteners)?.price ||
+          0)
       const updatedCartItems = existingCartItems.map((item: CartItem) =>
         item.id === cartItem.id
           ? {
               ...item,
               customization,
-              amount: cartItem.price + extraCost,
-              priceWithCustomization: beverage.price + extraCost,
+              amount: item.price + extraCost * item.quantity,
+              priceWithCustomization: item.price + extraCost,
             }
           : item,
       )
@@ -88,12 +83,12 @@ const CustomizePage = () => {
     } else {
       const beverageExists = existingCartItems.some(
         (item: CartItem) =>
-          item.customization?.milk === beverage.customization?.milk &&
-          item.customization?.flavours === beverage.customization?.flavours &&
-          item.customization?.sweeteners ===
-            beverage.customization?.sweeteners &&
+          item._id === beverage._id &&
+          item.customization?.milk === customization.milk &&
+          item.customization?.flavours === customization.flavours &&
+          item.customization?.sweeteners === customization.sweeteners &&
           item.customization?.specialInstructions ===
-            beverage.customization?.specialInstructions,
+            customization.specialInstructions,
       )
       if (!beverageExists) {
         const hasCustomizations = Object.values(customization).some(
@@ -112,7 +107,7 @@ const CustomizePage = () => {
           quantity: 1,
           amount: beverage.price + extraCost,
           priceWithCustomization: beverage.price + extraCost,
-          customization: hasCustomizations ? customization : undefined,
+          ...(hasCustomizations && { customization }),
         }
         const updatedCart = [...existingCartItems, beverageWithCustomization]
         localStorage.setItem("cartItems", JSON.stringify(updatedCart))
@@ -150,8 +145,8 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Milk Options</option>
-              {milk.map((m) => (
-                <option value={m.name}>
+              {milk.map((m, index) => (
+                <option key={index} value={m.name}>
                   {m.name} - ${m.price}
                 </option>
               ))}
@@ -164,8 +159,8 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Flavours Syrups Options</option>
-              {flavours.map((f) => (
-                <option value={f.name}>
+              {flavours.map((f, index) => (
+                <option key={index} value={f.name}>
                   {f.name} - ${f.price}
                 </option>
               ))}
@@ -178,8 +173,8 @@ const CustomizePage = () => {
               className="w-full rounded-md border px-3 py-2"
             >
               <option value="">Sweeteners Options</option>
-              {sweeteners.map((s) => (
-                <option value={s.name}>
+              {sweeteners.map((s, index) => (
+                <option key={index} value={s.name}>
                   {s.name} - ${s.price}
                 </option>
               ))}
@@ -187,6 +182,7 @@ const CustomizePage = () => {
             <h3 className="mt-4 text-xl font-semibold">Special Instructions</h3>
             <input
               type="text"
+              name="specialInstructions"
               value={customization.specialInstructions}
               onChange={handleCustomizationChange}
               className="w-full rounded-md border px-3 py-2"
