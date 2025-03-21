@@ -61,7 +61,7 @@ const CartPage = () => {
       </h1>
       {items.length !== 0 ? (
         <div className="flex w-full justify-between gap-5 px-10">
-          <div className="no-scrollbar mt-10 flex h-[calc(100vh-30vh)] w-1/2 flex-col items-center overflow-y-scroll p-2">
+          <div className="no-scrollbar mt-10 flex h-[calc(100vh-27vh)] w-1/2 flex-col items-center overflow-y-scroll p-2">
             {items.map((item, index) => (
               <CartCard
                 key={index}
@@ -88,7 +88,7 @@ const CartPage = () => {
                   <th className="w-1/4">Amount</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="no-scrollbar block h-[calc(100vh-87vh)] overflow-auto">
                 {items.map((item: CartItem, index) => (
                   <tr
                     className="flex items-center justify-between text-center text-xl"
@@ -102,7 +102,7 @@ const CartPage = () => {
                 ))}
               </tbody>
             </table>
-            <div className="font-poppins mt-20 border-y">
+            <div className="font-poppins mt-10 border-y">
               <div className="flex justify-between text-xl">
                 <h3>Name</h3>
                 <h3>Udara</h3>
