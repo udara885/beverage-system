@@ -73,7 +73,7 @@ const CustomizePage = () => {
           ? {
               ...item,
               customization,
-              amount: item.price + extraCost * item.quantity,
+              amount: (item.price + extraCost) * item.quantity,
               priceWithCustomization: item.price + extraCost,
             }
           : item,
