@@ -62,9 +62,9 @@ const CartPage = () => {
       {items.length !== 0 ? (
         <div className="flex w-full justify-between gap-5 px-10">
           <div className="no-scrollbar mt-10 flex h-[calc(100vh-27vh)] w-1/2 flex-col items-center overflow-y-scroll p-2">
-            {items.map((item, index) => (
+            {items.map((item) => (
               <CartCard
-                key={index}
+                key={item.id}
                 cartItem={item}
                 onRemove={removeItem}
                 onIncrease={increaseQty}
@@ -89,10 +89,10 @@ const CartPage = () => {
                 </tr>
               </thead>
               <tbody className="no-scrollbar block h-[calc(100vh-87vh)] overflow-auto">
-                {items.map((item: CartItem, index) => (
+                {items.map((item: CartItem) => (
                   <tr
                     className="flex items-center justify-between text-center text-xl"
-                    key={index}
+                    key={item.id}
                   >
                     <td className="w-1/4">{item.name}</td>
                     <td className="w-1/4">{item.quantity}</td>
