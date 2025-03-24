@@ -8,6 +8,10 @@ const CheckoutPage = () => {
     localStorage.getItem("cartItems") || "[]",
   )
 
+  const uniqueCartItems = cartItems.filter(
+    (item, index) => cartItems.findIndex((i) => i._id === item._id) === index,
+  )
+
   return (
     <div className="font-poppins flex w-full flex-col items-center">
       <h1 className="-mt-10 w-full border-b pb-4 text-center text-5xl font-medium">
@@ -15,8 +19,8 @@ const CheckoutPage = () => {
       </h1>
       <div className="flex w-full justify-between gap-10 px-10">
         <div className="no-scrollbar mt-10 flex h-[calc(100vh-27vh)] w-1/2 flex-col items-center overflow-y-scroll">
-          {cartItems.map((item, index) => (
-            <CartCard key={index} cartItem={item} />
+          {uniqueCartItems.map((item) => (
+            <CartCard key={item.id} cartItem={item} />
           ))}
         </div>
         <div className="mt-10 flex w-1/2 flex-col">
@@ -30,10 +34,10 @@ const CheckoutPage = () => {
               </tr>
             </thead>
             <tbody className="no-scrollbar block h-[calc(100vh-87vh)] overflow-auto">
-              {cartItems.map((item, index) => (
+              {cartItems.map((item) => (
                 <tr
                   className="flex items-center justify-between text-center text-xl"
-                  key={index}
+                  key={item.id}
                 >
                   <td className="w-1/4">{item.name}</td>
                   <td className="w-1/4">{item.quantity}</td>
