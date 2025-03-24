@@ -14,7 +14,7 @@ const CheckoutPage = () => {
         Check Out
       </h1>
       <div className="flex w-full justify-between gap-10 px-10">
-        <div className="mt-10 flex w-1/2 flex-col items-center overflow-y-scroll">
+        <div className="no-scrollbar mt-10 flex h-[calc(100vh-27vh)] w-1/2 flex-col items-center overflow-y-scroll">
           {cartItems.map((item, index) => (
             <CartCard key={index} cartItem={item} />
           ))}
@@ -29,16 +29,21 @@ const CheckoutPage = () => {
                 <th className="w-1/4">Amount</th>
               </tr>
             </thead>
-            <tbody>
-              <tr className="flex items-center justify-between text-center text-xl">
-                <td className="w-1/4">Espresso</td>
-                <td className="w-1/4">1</td>
-                <td className="w-1/4">$3.00</td>
-                <td className="w-1/4">$3.81</td>
-              </tr>
+            <tbody className="no-scrollbar block h-[calc(100vh-87vh)] overflow-auto">
+              {cartItems.map((item, index) => (
+                <tr
+                  className="flex items-center justify-between text-center text-xl"
+                  key={index}
+                >
+                  <td className="w-1/4">{item.name}</td>
+                  <td className="w-1/4">{item.quantity}</td>
+                  <td className="w-1/4">${item.price.toFixed(2)}</td>
+                  <td className="w-1/4">${item.amount?.toFixed(2)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-          <div className="font-poppins mt-20 border-y">
+          <div className="font-poppins mt-10 border-y">
             <div className="flex justify-between text-xl">
               <h3>Name</h3>
               <h3>Udara</h3>
@@ -53,7 +58,12 @@ const CheckoutPage = () => {
             </div>
             <div className="flex justify-between border-t py-1 text-xl">
               <h3 className="font-semibold">Total</h3>
-              <h3>$3.81</h3>
+              <h3>
+                $
+                {cartItems
+                  .reduce((sum, item) => sum + (item.amount ?? 0), 0)
+                  .toFixed(2)}
+              </h3>
             </div>
           </div>
           <div className="mt-2 flex items-center justify-between text-xl">
