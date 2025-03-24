@@ -14,7 +14,7 @@ const BeverageCard = ({ beverage }: { beverage: Beverage }) => {
         />
         <div className="font-poppins flex w-full flex-col">
           <h1 className="text-[1.75rem] font-semibold">
-            {beverage.name} - ${beverage.price}
+            {beverage.name} - ${beverage.price.toFixed(2)}
           </h1>
           <p className="text-[1.375rem]">{beverage.description}</p>
           <Link
