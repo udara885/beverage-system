@@ -18,7 +18,7 @@ const AdminBeverageCard = ({
       />
       <div className="flex w-[80%] items-center justify-between">
         <h1 className="text-2xl font-bold">{beverage.name}</h1>
-        <h2 className="text-xl font-semibold">${beverage.price}</h2>
+        <h2 className="text-xl font-semibold">${beverage.price.toFixed(2)}</h2>
       </div>
       <div className="flex w-full flex-col items-center gap-2">
         <Link
