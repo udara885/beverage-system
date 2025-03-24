@@ -1,7 +1,56 @@
 import { CreditCard } from "lucide-react"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
+import { CartItem } from "../types/types"
+import { ChangeEvent, FormEvent, useState } from "react"
+import toast from "react-hot-toast"
 
 const CardDetailsPage = () => {
+  const navigate = useNavigate()
+
+  const cartItems: CartItem[] = JSON.parse(
+    localStorage.getItem("cartItems") || "[]",
+  )
+
+  const [formData, setFormData] = useState({
+    email: "",
+    cardNumber: "",
+    expiry: "",
+    cvc: "",
+  })
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  console.log(formData.expiry)
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (formData.cardNumber.length !== 16) {
+      toast.error("Invalid Card Number.")
+    } else if (formData.cvc.length !== 3) {
+      toast.error("Invalid CVC.")
+    } else {
+      const [expiryYear, expiryMonth] = formData.expiry.split("-").map(Number)
+      const currentDate = new Date()
+      const currentYear = currentDate.getFullYear()
+      const currentMonth = currentDate.getMonth() + 1
+      if (
+        expiryYear < currentYear ||
+        (expiryYear === currentYear && expiryMonth < currentMonth)
+      ) {
+        toast.error("Card has expired.")
+      } else {
+        clearCart()
+        navigate("/order-confirm")
+      }
+    }
+  }
+
   const clearCart = () => {
     localStorage.removeItem("cartItems")
   }
@@ -11,21 +60,27 @@ const CardDetailsPage = () => {
       <h1 className="-mt-10 w-full border-b pb-4 text-center text-5xl font-medium">
         Check Out
       </h1>
-      <form className="flex w-[60%] flex-col">
+      <form className="flex w-[60%] flex-col" onSubmit={handleSubmit}>
         <h2 className="mt-5 border-b text-xl">Details</h2>
         <input
           type="email"
           name="email"
+          value={formData.email}
+          onChange={handleInputChange}
           placeholder="Email"
           className="mt-5 w-[70%] rounded-xl p-1 px-5 text-lg shadow-[0_4px_18.7px_0_rgba(0,0,0,0.25)]"
+          required
         />
         <h2 className="mt-5 border-b text-xl">Payment Details</h2>
         <div className="relative mt-5 flex items-center">
           <input
-            type="text"
-            name="card-number"
+            type="number"
+            name="cardNumber"
+            value={formData.cardNumber}
+            onChange={handleInputChange}
             placeholder="Card number"
             className="w-[70%] rounded-t-lg border-t border-r border-l p-1 px-5 text-lg"
+            required
           />
           <div className="absolute top-1 right-0 flex w-[38%] items-center gap-1">
             <img
@@ -41,32 +96,45 @@ const CardDetailsPage = () => {
         <div>
           <input
             type="month"
+            name="expiry"
+            value={formData.expiry}
+            onChange={handleInputChange}
             className="w-[30%] rounded-bl-lg border p-1 px-5 text-lg"
+            required
           />
           <input
             type="number"
+            name="cvc"
+            value={formData.cvc}
+            onChange={handleInputChange}
             className="w-[40%] rounded-br-lg border-t border-r border-b p-1 px-5 text-lg"
             placeholder="CVC"
+            required
           />
         </div>
-      </form>
-      <div className="mt-5 flex w-full flex-col items-center border-t text-xl">
-        <h3 className="mt-5">Name - Udara</h3>
-        <h3>Order No:21</h3>
-        <h3>Time - 15min</h3>
-        <div className="mt-5 flex w-[30%] justify-around border-y">
-          <h3 className="font-semibold">Total</h3>
-          <h3>$3.81</h3>
+
+        <div className="mt-5 flex w-full flex-col items-center border-t text-xl">
+          <h3 className="mt-5">Name - Udara</h3>
+          <h3>Order No:21</h3>
+          <h3>Time - 15min</h3>
+          <div className="mt-5 flex w-[30%] justify-around border-y">
+            <h3 className="font-semibold">Total</h3>
+            <h3>
+              $
+              {cartItems
+                .reduce((sum, item) => sum + (item.amount ?? 0), 0)
+                .toFixed(2)}
+            </h3>
+          </div>
+          <button
+            type="submit"
+            className="font-poppins mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md bg-orange-400 px-10 py-3 text-lg text-white"
+          >
+            <span className="font-semibold">Pay</span>
+            <CreditCard />
+          </button>
         </div>
-        <Link
-          to={"/order-confirm"}
-          onClick={clearCart}
-          className="font-poppins mt-5 flex cursor-pointer items-center justify-center gap-2 rounded-md bg-orange-400 px-10 py-3 text-lg text-white"
-        >
-          <span className="font-semibold">Pay</span>
-          <CreditCard />
-        </Link>
-      </div>
+      </form>
     </div>
   )
 }
