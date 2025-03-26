@@ -17,9 +17,12 @@ import AddBeveragePage from "./pages/AddBeveragePage"
 import UpdateBeveragePage from "./pages/UpdateBeveragePage"
 import { useEffect, useState } from "react"
 import { AdminContext } from "./context/AdminContext"
+import { KitchenContext } from "./context/KitchenContext"
 
 function App() {
   const [isAdmin, setIsAdmin] = useState(false)
+
+  const [isKitchen, setIsKitchen] = useState(false)
 
   const location = useLocation()
 
@@ -30,6 +33,11 @@ function App() {
       setIsAdmin(true)
     } else {
       setIsAdmin(false)
+      if (path.split("/").includes("kitchen")) {
+        setIsKitchen(true)
+      } else {
+        setIsKitchen(false)
+      }
     }
   }, [path])
 
@@ -37,46 +45,48 @@ function App() {
     <div className="flex justify-center overflow-hidden">
       <div className="flex h-screen max-w-screen-xl flex-col items-center">
         <AdminContext.Provider value={isAdmin}>
-          <Navbar />
-          <Routes>
-            <Route path="/">
-              <Route index element={<MenuPage />} />
-              {["coffee", "shake", "tea", "bubble-tea"].map((path, index) => (
-                <Route key={index} path={path} element={<MenuPage />} />
-              ))}
-              <Route path="customize" element={<CustomizePage />} />
-              <Route path="cart" element={<CartPage />} />
-              <Route path="checkout" element={<CheckoutPage />} />
-              <Route path="card-details" element={<CardDetailsPage />} />
-              <Route path="order-confirm" element={<OrderConfirmPage />} />
-              <Route path="feedback" element={<FeedbackPage />} />
-            </Route>
-            <Route path="kitchen">
-              <Route index element={<KitchenPage />} />
-              <Route path="orders" element={<OrdersPage />} />
-              <Route
-                path="completed-orders"
-                element={<CompletedOrdersPage />}
-              />
-              <Route path="instructions" element={<InstructionPage />} />
-            </Route>
-            <Route path="admin">
-              <Route index element={<AdminPage />} />
-              {["coffee", "shake", "tea", "bubble-tea"].map((path, index) => (
+          <KitchenContext.Provider value={isKitchen}>
+            <Navbar />
+            <Routes>
+              <Route path="/">
+                <Route index element={<MenuPage />} />
+                {["coffee", "shake", "tea", "bubble-tea"].map((path, index) => (
+                  <Route key={index} path={path} element={<MenuPage />} />
+                ))}
+                <Route path="customize" element={<CustomizePage />} />
+                <Route path="cart" element={<CartPage />} />
+                <Route path="checkout" element={<CheckoutPage />} />
+                <Route path="card-details" element={<CardDetailsPage />} />
+                <Route path="order-confirm" element={<OrderConfirmPage />} />
+                <Route path="feedback" element={<FeedbackPage />} />
+              </Route>
+              <Route path="kitchen">
+                <Route index element={<KitchenPage />} />
+                <Route path="orders" element={<OrdersPage />} />
                 <Route
-                  key={index}
-                  path={`/admin/${path}`}
-                  element={<AdminPage />}
+                  path="completed-orders"
+                  element={<CompletedOrdersPage />}
                 />
-              ))}
-              <Route path="add-beverage" element={<AddBeveragePage />} />
-              <Route
-                path="update-beverage/:id"
-                element={<UpdateBeveragePage />}
-              />
-            </Route>
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
+                <Route path="instructions" element={<InstructionPage />} />
+              </Route>
+              <Route path="admin">
+                <Route index element={<AdminPage />} />
+                {["coffee", "shake", "tea", "bubble-tea"].map((path, index) => (
+                  <Route
+                    key={index}
+                    path={`/admin/${path}`}
+                    element={<AdminPage />}
+                  />
+                ))}
+                <Route path="add-beverage" element={<AddBeveragePage />} />
+                <Route
+                  path="update-beverage/:id"
+                  element={<UpdateBeveragePage />}
+                />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </KitchenContext.Provider>
         </AdminContext.Provider>
       </div>
     </div>
