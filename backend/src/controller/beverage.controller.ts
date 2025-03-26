@@ -12,7 +12,7 @@ export const getAllBeverages = async (
 ) => {
 	try {
 		const beverages = await Beverage.find()
-
+		
 		res.status(200).json({ success: true, data: beverages })
 	} catch (error) {
 		next(error)
