@@ -1,9 +1,15 @@
 import { CreditCard } from "lucide-react"
-import { Link } from "react-router-dom"
 import CartCard from "../components/CartCard"
 import { CartItem } from "../types/types"
+import { useNavigate } from "react-router-dom"
+import { FormEvent, useState } from "react"
+import toast from "react-hot-toast"
 
 const CheckoutPage = () => {
+  const navigate = useNavigate()
+
+  const [paymentMethod, setPaymentMethod] = useState("")
+
   const cartItems: CartItem[] = JSON.parse(
     localStorage.getItem("cartItems") || "[]",
   )
@@ -11,6 +17,15 @@ const CheckoutPage = () => {
   const uniqueCartItems = cartItems.filter(
     (item, index) => cartItems.findIndex((i) => i._id === item._id) === index,
   )
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    if (paymentMethod === "") {
+      toast.error("Please select a payment method")
+    } else {
+      navigate("/card-details")
+    }
+  }
 
   return (
     <div className="font-poppins flex w-full flex-col items-center">
@@ -70,25 +85,29 @@ const CheckoutPage = () => {
               </h3>
             </div>
           </div>
-          <div className="mt-2 flex items-center justify-between text-xl">
-            <h3>Payment Method</h3>
-            <select
-              name="payment"
-              id="payment"
-              className="rounded-lg px-7 py-2 shadow-[0_4px_14px_0_rgba(0,0,0,0.10)]"
+          <form className="mt-2 flex flex-col text-xl" onSubmit={handleSubmit}>
+            <div className="flex w-full items-center justify-between gap-5">
+              <h3>Payment Method</h3>
+              <select
+                name="payment"
+                id="payment"
+                className="rounded-lg px-7 py-2 shadow-[0_4px_14px_0_rgba(0,0,0,0.10)]"
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+              >
+                <option>Payment Method</option>
+                <option value="card">Credit Card</option>
+                <option value="cash">Cash</option>
+              </select>
+            </div>
+            <button
+              type="submit"
+              className="font-poppins mt-15 flex cursor-pointer items-center justify-center gap-2 self-end rounded-md bg-orange-400 px-10 py-3 text-lg text-white"
             >
-              <option>Payment Method</option>
-              <option value="card">Credit Card</option>
-              <option value="cash">Cash</option>
-            </select>
-          </div>
-          <Link
-            to={"/card-details"}
-            className="font-poppins mt-15 flex cursor-pointer items-center justify-center gap-2 self-end rounded-md bg-orange-400 px-10 py-3 text-lg text-white"
-          >
-            <span className="font-semibold">Pay</span>
-            <CreditCard />
-          </Link>
+              <span className="font-semibold">Pay</span>
+              <CreditCard />
+            </button>
+          </form>
         </div>
       </div>
     </div>
