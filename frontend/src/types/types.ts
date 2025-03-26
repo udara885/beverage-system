@@ -25,3 +25,11 @@ export type CartItem = {
     specialInstructions?: string
   }
 }
+
+export type Order = {
+  _id?: string
+  orderNo: number
+  items: CartItem[]
+  status: string
+  amount: number
+}
