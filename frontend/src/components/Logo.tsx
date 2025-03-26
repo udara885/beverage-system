@@ -1,11 +1,13 @@
 import { useContext } from "react"
 import { Link } from "react-router-dom"
 import { AdminContext } from "../context/AdminContext"
+import { KitchenContext } from "../context/KitchenContext"
 
 const Logo = () => {
   const isAdmin = useContext(AdminContext)
+  const isKitchen = useContext(KitchenContext)
   return (
-    <Link to={isAdmin ? "/admin" : "/"}>
+    <Link to={isAdmin ? "/admin" : isKitchen ? "/kitchen" : ""}>
       <div className="flex items-center gap-3">
         <div className="rounded-md border-3 border-gray-400 p-0.5">
           <svg
