@@ -1,8 +1,9 @@
 import { CreditCard } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { CartItem } from "../types/types"
+import { CartItem, Order } from "../types/types"
 import { ChangeEvent, FormEvent, useState } from "react"
 import toast from "react-hot-toast"
+import { useOrderStore } from "../store/order"
 
 const CardDetailsPage = () => {
   const navigate = useNavigate()
@@ -11,11 +12,19 @@ const CardDetailsPage = () => {
     localStorage.getItem("cartItems") || "[]",
   )
 
+  const { createOrder } = useOrderStore()
+
   const [formData, setFormData] = useState({
     email: "",
     cardNumber: "",
     expiry: "",
     cvc: "",
+  })
+
+  const [newOrder, setNewOrder] = useState<Order>({
+    orderNo: Math.floor(Math.random() * 100 + 1),
+    items: cartItems,
+    amount: cartItems.reduce((sum, item) => sum + (item.amount ?? 0), 0),
   })
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,9 +35,7 @@ const CardDetailsPage = () => {
     }))
   }
 
-  console.log(formData.expiry)
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
     if (formData.cardNumber.length !== 16) {
       toast.error("Invalid Card Number.")
@@ -45,8 +52,18 @@ const CardDetailsPage = () => {
       ) {
         toast.error("Card has expired.")
       } else {
-        clearCart()
-        navigate("/order-confirm")
+        const { success, message } = await createOrder(newOrder)
+        if (!success) {
+          toast.error(message)
+        } else {
+          clearCart()
+          setNewOrder({
+            orderNo: 0,
+            items: [],
+            amount: 0,
+          })
+          navigate("/order-confirm")
+        }
       }
     }
   }
