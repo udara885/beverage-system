@@ -1,6 +1,22 @@
+import { useEffect, useState } from "react"
 import KitchenCard from "../components/KitchenCard"
+import { useOrderStore } from "../store/order"
+import Loader from "../components/Loader"
 
 const KitchenPage = () => {
+  const { orders, getOrders } = useOrderStore()
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setLoading(true)
+      await getOrders()
+      setLoading(false)
+    }
+    fetchOrders()
+  }, [getOrders])
+
   return (
     <div className="font-poppins flex w-full justify-center">
       <div className="w-[90%]">
@@ -17,7 +33,21 @@ const KitchenPage = () => {
           </select>
         </div>
         <div className="no-scrollbar h-[calc(100vh-30vh)] overflow-y-scroll">
-          <KitchenCard />
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              {orders.length !== 0 ? (
+                orders.map((order, index) => (
+                  <KitchenCard order={order} index={index + 1} key={index} />
+                ))
+              ) : (
+                <p className="font-poppins mt-50 flex items-center justify-center text-4xl font-bold">
+                  No Orders Found.😢
+                </p>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
