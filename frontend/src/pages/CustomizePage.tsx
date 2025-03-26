@@ -101,8 +101,11 @@ const CustomizePage = () => {
             (sweeteners.find((s) => s.name === customization.sweeteners)
               ?.price || 0)
           : 0
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { __v, createdAt, updatedAt, ...beverageWithoutMetadata } =
+          beverage
         const beverageWithCustomization: CartItem = {
-          ...beverage,
+          ...beverageWithoutMetadata,
           id: uuid(),
           quantity: 1,
           amount: beverage.price + extraCost,
