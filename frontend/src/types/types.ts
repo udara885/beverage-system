@@ -5,6 +5,9 @@ export type Beverage = {
   image: string
   category: string
   description: string
+  __v?: number
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export type CartItem = {
@@ -30,6 +33,6 @@ export type Order = {
   _id?: string
   orderNo: number
   items: CartItem[]
-  status: string
+  status?: string
   amount: number
 }
