@@ -8,6 +8,8 @@ const OrdersPage = () => {
 
   const [loading, setLoading] = useState(true)
 
+  const filteredOrders = orders.filter((order) => order.status !== "Completed")
+
   useEffect(() => {
     const fetchOrders = async () => {
       setLoading(true)
@@ -17,13 +19,11 @@ const OrdersPage = () => {
     fetchOrders()
   }, [getOrders])
 
-  console.log(orders)
-
   return (
     <div className="font-poppins flex w-full justify-center">
       <div className="w-[90%]">
         <div className="mb-3 flex items-center justify-between">
-          <h1 className="text-5xl">Orders</h1>
+          <h1 className="text-5xl font-medium">Orders</h1>
           <select
             name=""
             id=""
@@ -39,8 +39,8 @@ const OrdersPage = () => {
             <Loader />
           ) : (
             <>
-              {orders.length !== 0 ? (
-                orders.map((order, index) => (
+              {filteredOrders.length !== 0 ? (
+                filteredOrders.map((order, index) => (
                   <KitchenCard order={order} index={index + 1} />
                 ))
               ) : (
