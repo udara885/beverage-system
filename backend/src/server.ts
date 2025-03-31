@@ -5,6 +5,7 @@ import beverageRouter from "./routes/beverage.routes"
 import arcjetMiddleware from "./middlewares/arcjet.middleware"
 import errorMiddleware from "./middlewares/error.middleware"
 import orderRouter from "./routes/order.routes"
+import feedbackRouter from "./routes/feedback.routes"
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use("/api/v1/beverages", beverageRouter)
 app.use("/api/v1/orders", orderRouter)
+app.use("/api/v1/feedback", feedbackRouter)
 
 app.use(errorMiddleware)
 
