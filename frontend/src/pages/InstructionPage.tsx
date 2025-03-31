@@ -38,8 +38,8 @@ const InstructionPage = () => {
             <span className="text-3xl font-semibold">{index}</span>
           </div>
         </div>
-        {order.items.map((item) => (
-          <>
+        {order.items.map((item, index) => (
+          <div className={`${index !== 0 && "border-t border-dashed"}`}>
             <div className="mt-2 flex items-center justify-between border-b pb-2">
               <div className="flex items-center gap-10">
                 <img
@@ -49,16 +49,18 @@ const InstructionPage = () => {
                 />
                 <h2 className="text-[1.75rem] font-bold">{item.name}</h2>
               </div>
-              <select
-                name="status"
-                className="h-[60px] w-[280px] rounded-lg px-5 text-lg text-gray-600 shadow-[0_4px_14px_0_rgba(0,0,0,0.10)]"
-                onChange={(e) => order._id && handleProcess(e, order._id)}
-              >
-                <option disabled>Process</option>
-                <option value="New Order">New Order</option>
-                <option value="Processing">Processing</option>
-                <option value="Completed">Completed</option>
-              </select>
+              {index === 0 && (
+                <select
+                  name="status"
+                  className="h-[60px] w-[280px] rounded-lg px-5 text-lg text-gray-600 shadow-[0_4px_14px_0_rgba(0,0,0,0.10)]"
+                  onChange={(e) => order._id && handleProcess(e, order._id)}
+                >
+                  <option disabled>Process</option>
+                  <option value="New Order">New Order</option>
+                  <option value="Processing">Processing</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              )}
             </div>
             <div className="flex flex-col border-b py-5">
               <h2 className="text-2xl font-semibold">Customize</h2>
@@ -75,7 +77,7 @@ const InstructionPage = () => {
               <h2 className="text-2xl font-semibold">Instructions</h2>
               <p>{item.customization?.specialInstructions}</p>
             </div>
-          </>
+          </div>
         ))}
       </div>
     </div>
