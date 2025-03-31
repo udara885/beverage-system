@@ -97,7 +97,6 @@ const CheckoutPage = () => {
               >
                 <option>Payment Method</option>
                 <option value="card">Credit Card</option>
-                <option value="cash">Cash</option>
               </select>
             </div>
             <button
