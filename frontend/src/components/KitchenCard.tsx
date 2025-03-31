@@ -4,7 +4,9 @@ import { Order } from "../types/types"
 
 const KitchenCard = ({ order, index }: { order: Order; index: number }) => {
   const location = useLocation()
+
   const path = location.pathname
+
   return (
     <div className="flex items-center justify-between border-t py-5">
       <div className="flex flex-col gap-5">
@@ -44,7 +46,7 @@ const KitchenCard = ({ order, index }: { order: Order; index: number }) => {
             <Link
               to={"/kitchen/instructions"}
               className="rounded-lg bg-orange-400 px-6 py-2"
-              state={{ order }}
+              state={{ order, index }}
             >
               <BookOpen size={30} fill="white" stroke="white" />
             </Link>
