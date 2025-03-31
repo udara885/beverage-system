@@ -9,7 +9,9 @@ const CompletedOrdersPage = () => {
 
   const [loading, setLoading] = useState(true)
 
-  const filteredOrders = orders.filter((order) => order.status === "Completed")
+  const filteredOrders = orders
+    .filter((order) => order.status === "Completed")
+    .reverse()
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -37,7 +39,7 @@ const CompletedOrdersPage = () => {
           <div className="no-scrollbar h-[calc(100vh-30vh)] overflow-y-scroll">
             {filteredOrders.length !== 0 ? (
               filteredOrders.map((order, index) => (
-                <KitchenCard order={order} index={index + 1} />
+                <KitchenCard order={order} index={index + 1} key={index} />
               ))
             ) : (
               <p className="font-poppins mt-50 flex items-center justify-center text-4xl font-bold">
