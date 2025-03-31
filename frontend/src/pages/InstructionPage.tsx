@@ -6,13 +6,15 @@ const InstructionPage = () => {
 
   const order: Order = location.state.order
 
+  const index: number = location.state.index
+
   return (
     <div className="font-poppins flex w-full justify-center">
       <div className="no-scrollbar flex h-[calc(100vh-20vh)] w-[90%] flex-col overflow-y-scroll">
         <div className="flex items-center justify-between border-b pb-2">
           <h1 className="text-5xl font-medium">Special Instructions</h1>
           <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 p-5">
-            <span className="text-3xl font-semibold">1</span>
+            <span className="text-3xl font-semibold">{index}</span>
           </div>
         </div>
         {order.items.map((item) => (
@@ -37,7 +39,7 @@ const InstructionPage = () => {
                 <option value="completed">Completed</option>
               </select>
             </div>
-            <div className="border-b py-5">
+            <div className="flex flex-col border-b py-5">
               <h2 className="text-2xl font-semibold">Customize</h2>
               <span>{item.customization?.milk}</span>
               <span>{item.customization?.flavours}</span>
