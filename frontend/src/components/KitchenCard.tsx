@@ -39,14 +39,16 @@ const KitchenCard = ({ order, index }: { order: Order; index: number }) => {
           <option value="processing">Processing</option>
           <option value="completed">Completed</option>
         </select>
-        {path !== "/kitchen/completed-orders" && (
-          <Link
-            to={"/kitchen/instructions"}
-            className="rounded-lg bg-orange-400 px-6 py-2"
-          >
-            <BookOpen size={30} fill="white" stroke="white" />
-          </Link>
-        )}
+        {path !== "/kitchen/completed-orders" &&
+          order.items[0].customization?.specialInstructions && (
+            <Link
+              to={"/kitchen/instructions"}
+              className="rounded-lg bg-orange-400 px-6 py-2"
+              state={{ order }}
+            >
+              <BookOpen size={30} fill="white" stroke="white" />
+            </Link>
+          )}
         <div className="flex h-[90px] w-[90px] items-center justify-center rounded-full border">
           <span className="text-3xl font-semibold">{index}</span>
         </div>
